@@ -3,10 +3,11 @@ import axios from 'axios';
 import './Dashboard.css'; // Import the CSS file
 
 const Dashboard = () => {
+    const BASE_URL = process.env.REACT_APP_API_URL; // Use the environment variable
     const [fundFamilies, setFundFamilies] = useState([]);
     const [selectedFamily, setSelectedFamily] = useState('');
     const [schemes, setSchemes] = useState([]);
-    const [expandedScheme, setExpandedScheme] = useState(null); // State for expanded scheme
+    const [expandedScheme, setExpandedScheme] = useState(null);
     const [purchaseAmount, setPurchaseAmount] = useState('');
     const [error, setError] = useState('');
 
@@ -14,7 +15,7 @@ const Dashboard = () => {
     useEffect(() => {
         const fetchFundFamilies = async () => {
             try {
-                const response = await axios.get('http://localhost:8000/fund-families', {
+                const response = await axios.get(`${BASE_URL}/fund-families`, {
                     headers: {
                         'Authorization': `Bearer ${localStorage.getItem('access_token')}`,
                     },
@@ -31,7 +32,7 @@ const Dashboard = () => {
     const fetchSchemes = async (fundFamily) => {
         setSelectedFamily(fundFamily);
         try {
-            const response = await axios.get(`http://localhost:8000/schemes/${fundFamily}`, {
+            const response = await axios.get(`${BASE_URL}/schemes/${fundFamily}`, {
                 headers: {
                     'Authorization': `Bearer ${localStorage.getItem('access_token')}`,
                 },
@@ -50,7 +51,7 @@ const Dashboard = () => {
     // Handle purchase
     const handlePurchase = async (schemeCode) => {
         try {
-            const response = await axios.post('http://localhost:8000/purchase', {
+            const response = await axios.post(`${BASE_URL}/purchase`, {
                 scheme_code: schemeCode,
                 amount: purchaseAmount,
             }, {

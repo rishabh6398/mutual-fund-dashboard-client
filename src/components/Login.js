@@ -9,11 +9,13 @@ const Login = () => {
     const [error, setError] = useState('');
     const navigate = useNavigate();
 
+    const BASE_URL = process.env.REACT_APP_API_URL; // Use the environment variable
+
     const handleLogin = async (e) => {
         e.preventDefault();
         
         try {
-            const response = await axios.post('http://localhost:8000/login', new URLSearchParams({
+            const response = await axios.post(`${BASE_URL}/login`, new URLSearchParams({
                 username: username,
                 password: password,
             }), {
