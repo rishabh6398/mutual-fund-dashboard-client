@@ -26,7 +26,7 @@ const Dashboard = () => {
             }
         };
         fetchFundFamilies();
-    }, []);
+    }, [BASE_URL]);
 
     // Fetch schemes for selected fund family
     const fetchSchemes = async (fundFamily) => {
